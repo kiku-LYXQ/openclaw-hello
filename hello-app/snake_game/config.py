@@ -1,8 +1,19 @@
-"""游戏常量配置。"""
-GRID_WIDTH = 20
-GRID_HEIGHT = 20
-INITIAL_SNAKE_LENGTH = 4
-TICK_INTERVAL = 0.18  # 秒 / 帧
+"""游戏常量配置，逻辑层可直接引用。"""
 
-# 方向提示
+GRID_WIDTH = 20
+"""默认网格宽度（列数）。"""
+
+GRID_HEIGHT = 20
+"""默认网格高度（行数）。"""
+
+MIN_GRID_DIMENSION = 5
+"""允许的最小地图维度，避免太小导致行为异常。"""
+
+INITIAL_SNAKE_LENGTH = 4
+"""游戏开始时蛇身的初始长度，适配固定 20×20 地图。"""
+
+TICK_INTERVAL = 0.18  # 秒 / 帧
+"""游戏更新帧率间隔，界面可据此设置定时器。"""
+
 DIRECTION_HINT = "方向键↑↓←→ 或 WASD 控制移动。"
+"""用于向用户提示操控方式。"""
