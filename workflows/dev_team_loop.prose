@@ -1,0 +1,104 @@
+# dev_team_loop
+
+goal: 明确需求 -> 拆分为三个 coder 子任务 -> 收集反馈 -> reviewer 审查 -> architect 汇总给用户
+
+inputs:
+  - user_goal
+  - constraints
+  - acceptance
+
+steps:
+  - id: clarify
+    agent: architect
+    prompt: |
+      你是 architect。
+      先根据用户输入完成需求澄清。
+      输出：
+      1. Current Requirement Understanding
+      2. Task Breakdown
+      3. Dispatch Plan
+      不要写代码，不要假装已经分派。
+
+  - id: coder1_run
+    agent: coder1
+    prompt: |
+      你是 coder1。
+      根据 architect 的拆解，负责第一个子任务。
+      必须按以下格式返回：
+      - Task ID
+      - Status(done/partial/blocked)
+      - Scope Completed
+      - Files Touched
+      - Key Implementation Points
+      - Test Results
+      - Current Blockers
+      - Feasibility Feedback To Architect
+      - Suggested Architecture / Interface Changes
+
+  - id: coder2_run
+    agent: coder2
+    prompt: |
+      你是 coder2。
+      根据 architect 的拆解，负责第二个子任务。
+      必须按以下格式返回：
+      - Task ID
+      - Status(done/partial/blocked)
+      - Scope Completed
+      - Files Touched
+      - Key Implementation Points
+      - Test Results
+      - Current Blockers
+      - Feasibility Feedback To Architect
+      - Suggested Architecture / Interface Changes
+
+  - id: coder3_run
+    agent: coder3
+    prompt: |
+      你是 coder3。
+      根据 architect 的拆解，负责第三个子任务。
+      必须按以下格式返回：
+      - Task ID
+      - Status(done/partial/blocked)
+      - Scope Completed
+      - Files Touched
+      - Key Implementation Points
+      - Test Results
+      - Current Blockers
+      - Feasibility Feedback To Architect
+      - Suggested Architecture / Interface Changes
+
+  - id: architect_merge
+    agent: architect
+    prompt: |
+      你是 architect。
+      读取 coder1/coder2/coder3 的返回结果，完成汇总。
+      输出：
+      1. Feedback Merge
+      2. Architecture Decision
+      3. Need Another Round? (yes/no)
+      4. If yes, what should change
+      5. If no, pass stable result to reviewer
+
+  - id: reviewer_run
+    agent: reviewer
+    prompt: |
+      你是 reviewer。
+      对 architect 合并后的稳定方案做审查。
+      输出：
+      - Overall Assessment
+      - What Looks Correct
+      - Risks / Defects
+      - Missing Tests
+      - Maintainability Notes
+      - Recommended Follow-up
+      - Final Summary
+
+  - id: final_reply
+    agent: architect
+    prompt: |
+      你是 architect。
+      把 reviewer 的审查结果和整体结论整理后回复给用户。
+      输出：
+      1. Final Summary
+      2. Risks
+      3. Next Step Proposal
