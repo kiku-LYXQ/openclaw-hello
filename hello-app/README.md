@@ -39,7 +39,7 @@
 
 ---
 ## 3. 运行游戏
-确保仍在 `hello-app` 目录内（或在仓库根直接运行 `python -m snake_game`），再运行：
+确保仍在 `hello-app` 目录内（若必须在仓库根直接运行，请先设置 `PYTHONPATH=hello-app`），再运行：
 ```bash
 python -m snake_game
 ```
@@ -47,7 +47,7 @@ python -m snake_game
 ```bash
 python snake_game/main.py
 ```
-- 如果你习惯从仓库根运行，不需要先 `cd hello-app`，root shim 会自动导入游戏包。
+- 如果你习惯从仓库根运行，请先执行 `PYTHONPATH=hello-app python -m snake_game`，兼容 shim 已迁移到 `hello-app/snakes_game`，仓库根不再直接暴露 `snake_game` 包。
 - 该命令需要支持 curses 的终端，非 TTY 环境（如 CI 或后台 shell）会报 `curses.cbreak()/nocbreak() returned ERR`，此为缺少交互式 tty 的提示，在真实终端中可以忽略。
 - 每次启动请保持终端最大化或让窗口至少 80×24 行列以避免界面布局错乱。
 - 若提示 `terminal too small`，请扩大终端然后重新运行。
@@ -66,7 +66,7 @@ python snake_game/main.py
 ---
 ## 5. 常见问题小贴士
 - **我按 `python -m snake_game` 它报错：`ModuleNotFoundError`**
-- 确认当前目录是 `hello-app`（或在仓库根且已拉取最新 master，root shim 生效）。
+- 确认当前目录是 `hello-app`（若必须在仓库根使用，请先设置 `PYTHONPATH=hello-app` 以便加载 `hello-app/snakes_game` 下的兼容 shim）。
 - 若仍提示 `No module named snake_game`，先 `git pull origin master` 或重新 clone，确保 `snake_game/__init__.py` + `__main__.py` 已同步。
 - 激活虚拟环境后再执行 `python -m pip install windows-curses`。
 - **游戏界面黑屏或乱码**
@@ -88,6 +88,7 @@ python -m unittest snake_game.tests.test_logic
 ---
 ## 7. 目录结构速览
 ```
+snakes_game/        # 兼容 shim（原来在仓库根）会把 snake_game 实现路径注册到载入器
 snake_game/          # 游戏源代码
   config.py          # 地图与常量配置
   logic.py           # 纯逻辑状态机

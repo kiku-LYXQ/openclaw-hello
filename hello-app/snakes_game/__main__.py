@@ -1,4 +1,4 @@
-"""Entrypoint shim that delegates to hello-app/snake_game.main."""
+"""Entrypoint shim that routes to the snake_game launcher."""
 from __future__ import annotations
 
 
