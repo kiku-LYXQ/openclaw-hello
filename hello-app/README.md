@@ -42,11 +42,11 @@
   ```bash
   python -m snake_game
   ```
-- 如果你在仓库根，推荐使用 Makefile：
+- 推荐直接在 `hello-app` 目录里使用 Makefile：
   ```bash
   make run
   ```
-  该命令会自动 `cd hello-app` 后再执行 `python -m snake_game`。
+  这些目标（run/test/lint）在本目录定义，分别等价于 `python -m snake_game`、`python -m unittest snake_game.tests.test_logic` 和 `python -m py_compile snake_game/*.py snake_game/tests/*.py`。
 - 也可以直接运行启动脚本：
   ```bash
   python snake_game/main.py
@@ -88,19 +88,16 @@ SNAKE_GRID_WIDTH=24 SNAKE_GRID_HEIGHT=16 SNAKE_TICK_INTERVAL=0.12 python -m snak
 
 ---
 ## 7. Makefile 与常用命令
-- 项目根目录提供 `Makefile`，封装了常用流程，在仓库根执行：
+- `hello-app` 目录中包含 `Makefile`，可用来执行常见流程。
   ```bash
-  make run   # 启动游戏（相当于 cd hello-app && python -m snake_game）
+  make run   # 启动游戏
   make test  # 运行逻辑单元测试
-  make lint  # 检查 Python 语法（py_compile）
+  make lint  # 语法检查（py_compile）
   ```
-- `make test` 等价于：
-  ```bash
-  cd hello-app && python -m unittest snake_game.tests.test_logic
-  ```
-- `make lint` 通过 `py_compile` 编译主程序与测试，确保语法能通过解析。
-
----
+- 这些命令会在执行时默认使用当前目录，因此请勿在其他目录运行 `make`。
+- `make run` 等价于：`python -m snake_game`
+- `make test` 等价于：`python -m unittest snake_game.tests.test_logic`
+- `make lint` 等价于：`python -m py_compile snake_game/*.py snake_game/tests/*.py`
 ## 8. 测试说明
 在 `hello-app` 目录下运行：
 ```bash
@@ -139,3 +136,6 @@ highscore.txt       # 运行时生成（记录历史最高分）
 4. 若要验证逻辑，运行 `make test` 或 `python -m unittest snake_game.tests.test_logic`。
 
 如果无法复现某些行为，请把具体终端错误截图发送给维护人员。
+---
+## 12. 设计总结
+详见本目录下的 `DESIGN_SUMMARY.md`，记录了需求到实现的架构与验证流程，便于未来扩展或梳理审查轨迹。
