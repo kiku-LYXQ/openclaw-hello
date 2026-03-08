@@ -41,4 +41,27 @@
 - 若未来还需要扩展更多 UI/模式或增加自动回放，可在 `snake_game.logic` 中添加接口，UI 层无感知；只要保持 shim 的路径指向即可。
 - 按照 review 模板继续提醒 reviewer：背景、动作、输出严格分三段，确保环境/命令一致。
 
+## 7. 协作与权限模型（新增）
+
+- 默认协作模式采用 `fork + PR`：architect 维护主仓库，coder1/2/3 在各自 fork 上开发并提交 PR。
+- 备选模式为 `single-repo-branches`：同一仓库下每位 coder 仅推送自己的受保护分支。
+
+### 7.1 角色边界
+
+- architect：唯一合并者，负责最终验证、squash merge、推送主分支。
+- coder：只提交任务分支改动，不直接修改主分支。
+- reviewer：仅基于 PR/diff/patch 给审查结论，不基于口头描述下结论。
+
+### 7.2 命名与提交规范
+
+- 分支命名：`task/<id>-<short>`。
+- 提交信息：`[task-<id>] <summary>`。
+- 每个任务交付物必须是可合并单位：PR 链接、`git format-patch` 产物或明确 commit hash。
+
+### 7.3 验收与回滚
+
+- architect 合并前必须在本地复现实测命令并记录结果。
+- 若 reviewer 发现基线过期（新变更未纳入），旧结论作废并强制重审。
+- 回滚优先使用 `git revert`，避免破坏历史的强制重写。
+
 *编写者：Architect（协调 coder1/2/3 与 reviewer），2026-03-08* 
